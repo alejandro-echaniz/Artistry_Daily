@@ -8,15 +8,8 @@
 - [ ] CSS
 - [ ] API call
 
-## Project ideas
+## Project idea
 - [ ] Daily art explanation
-    - [ ] signup for daily emails
+    - [ ] sign in for users
+    - [ ] DataBase stores user's favorite images and ratings
     - [ ] webpage shows current art piece of the day + prev
-- [ ] simple weather app
-    - [ ] user submits form for location
-    - [ ] api request for weather
-    - [ ] display it to user
-- [ ] Lyrics display
-    - [ ] user submits form for lyrics
-    - [ ] api request for lyrics
-    - [ ] display lyrics to user, store song searched
