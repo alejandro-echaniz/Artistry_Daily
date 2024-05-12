@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,351;1,351&display=swap');
+
+/* || custom VARIABLES */
+:root {
+    --primary-color : #BB0000;
+    --secondary-color : #666666;
+    --third-color : #E8DAB2;
+    --accent-color : #453831;
+    --text-color : #000000;
+}
+
+/* --------------------------------------- */
+
+/* || html defined tags */
+body {
+    font-family: Montserrat;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #F3F3EB;
+}
+
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -5,9 +27,19 @@ ul {
     overflow: hidden;
 }
 
+/* --------------------------------------- */
+
+/* || custom CLASSES */
+.navigation {
+    width: 100%;
+    background-color: #CFD8D7;
+}
+
+/* --------------------------------------- */
+
+/* || custom IDs */
 #title {
-    font-weight: bold;
-    
+    font-style: italic;
 }
 
 #login {
@@ -17,13 +49,4 @@ ul {
 
 #login li {
     display: inline-block;
-}
-
-.navigation {
-    background-color: #CFD8D7;
-}
-
-body {
-    font-family: "Trirong", serif;
-    background-color: #F3F3EB;
 }
