@@ -6,6 +6,10 @@ const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
 
+const URL_SUFFIX = '/full/843,/0/default.jpg';
+let image_id, endpoint;
+
+
 let ids = [];
 
 // Function to get a random ID from the CSV file
@@ -50,5 +54,44 @@ getRandomID((err, randomId) => {
     generatedID = randomId;
     console.log(generatedID);
 });
+
+async function getImageJson() {
+    return new Promise((resolve, reject) => {
+        getRandomID((err, randomId) => {
+            if (err) {
+                return reject(err);
+            }
+            let url = `https://api.artic.edu/api/v1/artworks/${randomId}?fields=id,title,image_id,short_description`;
+            fetch(url)
+                .then(response => response.json())
+                .then(json => resolve(json))
+                .catch(error => reject(error));
+        });
+    });
+
+}
+
+function setImage_id(json) {
+    image_id = json.data.image_id;
+    endpoint = json.config.iiif_url;
+}
+
+async function getImageUrl() {
+    let json = await getImageJson();
+    setImage_id(json);
+    let url = endpoint + "/" + image_id + URL_SUFFIX;
+    return url;
+}
+
+async function main() {
+    try {
+        let bla = await getImageUrl();
+        console.log(bla);
+    } catch (e) { /* To see catch action, rename URL to invalid name */
+      console.log("\n***** ERROR Retrieving EnglishSpanish *****\n" + e);
+    }
+  }
+  
+  main();
 
 
