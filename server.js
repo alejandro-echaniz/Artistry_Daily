@@ -6,8 +6,14 @@ const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
 
+app.set("views", path.resolve(__dirname, "templates"));
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: false }));
+const http = require("http");
+const httpSuccessStatus = 200;
+
 const URL_SUFFIX = '/full/843,/0/default.jpg';
-let image_id, endpoint;
+let image_id, endpoint, description, title, artist;
 
 
 let ids = [];
@@ -61,7 +67,7 @@ async function getImageJson() {
             if (err) {
                 return reject(err);
             }
-            let url = `https://api.artic.edu/api/v1/artworks/${randomId}?fields=id,title,image_id,short_description`;
+            let url = `https://api.artic.edu/api/v1/artworks/${randomId}?fields=id,title,artist_title,image_id,short_description`;
             fetch(url)
                 .then(response => response.json())
                 .then(json => resolve(json))
@@ -74,6 +80,10 @@ async function getImageJson() {
 function setImage_id(json) {
     image_id = json.data.image_id;
     endpoint = json.config.iiif_url;
+    description = json.data.short_description
+    title = json.data.title;
+    artist = json.data.artist_title;
+
 }
 
 async function getImageUrl() {
@@ -83,12 +93,22 @@ async function getImageUrl() {
     return url;
 }
 
+app.get("/", async (req, res) => {
+    //need to load the image url
+    let url = await getImageUrl();
+    let image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
+    document.getElementsByClassName("display").innerHTML = image;
+    let description = `<p>This work is from ${artist} and is titled "<em>${title}</em>".</p><br><p>${description}</p>`
+    document.getElementsByClassName("information").innerHTML = description;
+    res.render("index");
+});
+
 async function main() {
     try {
         let bla = await getImageUrl();
         console.log(bla);
     } catch (e) { /* To see catch action, rename URL to invalid name */
-      console.log("\n***** ERROR Retrieving EnglishSpanish *****\n" + e);
+      console.log("\n***** ERROR Retrieving *****\n" + e);
     }
   }
   
