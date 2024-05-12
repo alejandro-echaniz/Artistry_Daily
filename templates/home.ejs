@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<!-- home.ejs -->
+<!-- Akash Choudhury | Alejandro Echaniz -->
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="HTML5, Responsive">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Artistry Daily</title>
+    <meta name="description" content="HOME for Artistry Daily">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="navigation">
+        <ul>
+            <li id="title"><h1>Artistry Daily</h1></li>
+            
+            <form action="/processRatings" method="post" id="login">
+                <li>
+                    <input type="range" min="0" max="5" value="3" class="slider" id="myRange">
+                </li>
+                <li><button onclick="favorite()">Favorite</button></li>
+                <button type="submit">Submit</button>
+            </form>
+        </ul>
+        <hr>
+    </nav>
+
+    <h2><%- %></h2> <!-- TITLE OF PAINTING -->
+    <div class="display">
+        <img src="https://www.artic.edu/iiif/2/1adf2696-8489-499b-cad2-821d7fde4b33/full/843,/0/default.jpg">
+    </div>
+
+    <h3>Painting Description</h3>
+    <div class="information">
+    </div>
+
+</body>
+
+</html>
