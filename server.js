@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const http = require("http");
 const httpSuccessStatus = 200;
 
-const PORTNUMBER = process.env.PORT || 5006;
+const PORTNUMBER = process.env.PORT || 5005;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 
@@ -93,34 +93,69 @@ async function getImageUrl() {
     return url;
 }
 
+let paintingData; // datablock containing painting information through api req
+
 app.get("/", async (req, res) => {
     //need to load the image url
-    let url = await getImageUrl();
-    let image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
-    let info = `<p>This work is from ${artist} and is titled "<em>${title}</em>".</p><br><p>${description}</p>`
-    let data = {
+    const url = await getImageUrl();
+    const image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
+    description = description === null ? `There is currently no description for this work :(` : description;
+    
+    const info = `<p>This work is from ${artist} and is titled ` +
+        `"<em>${title}</em>".</p><p>${description}</p>`
+
+    paintingData = {
         paintingTitle : title,
         paintingImage : image,
         paintingInformation : info,
     }
-    res.render("index", data);
+    res.render("index", paintingData);
 });
 
-app.post("/", async (req, res) => {
-    
+app.post("/home", async (req, res) => {
+    // loading image url
+    // let image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
+    // let info = `<p>This work is from ${artist} and is titled "<em>${title}</em>".</p><p>${description}</p>`
+    // let data = {
+        // paintingTitle : title,
+        // paintingImage : image,
+        // paintingInformation : info,
+    // }
+
+    // rendering information onto page
+    res.render("home", paintingData)
 })
 
-// async function main() {
-//     try {
-//         let bla = await getImageUrl();
-//         console.log(bla);
-//     } catch (e) { 
-//       console.log("\n***** ERROR Retrieving *****\n" + e);
-//     }
-// }
-  
-// main();
+/* running server locally */
+process.stdin.setEncoding("utf8");
+const greeting = `Web server started and running at ${PORTNUMBER}\n`;
+const prompt = `Stop to shutdown the server: `;
 
-app.listen(PORTNUMBER, () => {
-    console.log(`Example app listening on port ${PORTNUMBER}`)
+process.stdout.write(greeting);
+process.stdout.write(prompt);
+
+process.stdin.on('readable', () => {
+    const dataInput = process.stdin.read();
+    if (dataInput !== null) {
+        const command = dataInput.trim();
+
+        // SHUTDOWN SERVER
+        if (command === "stop") {
+            console.log("Shutting down the server");
+            process.exit(0);
+        } 
+        
+        // WILD CARD: IMPROPER COMMAND
+        else {
+            console.log(`Invalid command: ${command}`);
+            process.stdout.write(prompt);
+        }
+    }
+    process.stdin.resume();
 })
+
+app.listen(PORTNUMBER);
+
+// app.listen(PORTNUMBER, () => {
+//     console.log(`Example app listening on port ${PORTNUMBER}`)
+// })
