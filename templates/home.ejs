@@ -1,58 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <!-- home.ejs -->
+  <!-- Akash Choudhury | Alejandro Echaniz -->
 
-<!-- home.ejs -->
-<!-- Akash Choudhury | Alejandro Echaniz -->
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="keywords" content="HTML5, Responsive">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="html5, responsive" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Artistry Daily</title>
-    <meta name="description" content="HOME for Artistry Daily">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
+    <title>artistry daily</title>
+    <meta name="description" content="home for artistry daily" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  </head>
 
-<body>
+  <body>
     <nav class="navigation">
-        <ul>
-            <li id="title"><h1>Artistry Daily</h1></li>
-            
-            <form action="/processRatings" method="post" id="login">
-                <li>
-                    <input type="range" min="0" max="5" value="3" class="slider" id="myRange" list="tickmarks">
-                        <datalist id="tickmarks">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </datalist>
-                </li>
-                <li><button onclick="favorite()">Favorite</button></li>
-                <button type="submit">Submit</button>
+      <ul>
+        <li id="title"><h1>Artistry Daily</h1></li>
 
-                <!-- TODO ENSURE THAT LOGOUT REDIRECTS BACK TO INDEX.EJS-->
-                <button onclick="logout()">Logout</button> 
-            </form>
-        </ul>
-        <hr>
+        <form action="/processRatings" method="post" id="login">
+          <li>
+            <input
+              type="range"
+              min="0"
+              max="5"
+              value="3"
+              class="slider"
+              id="myRange"
+              list="tickmarks"
+            />
+            <datalist id="tickmarks">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </datalist>
+          </li>
+          <li><button onclick="favorite()">Favorite</button></li>
+          <button type="submit">Submit</button>
+
+          <!-- TODO ENSURE THAT LOGOUT REDIRECTS BACK TO INDEX.EJS-->
+          <button onclick="logout()">Logout</button>
+        </form>
+      </ul>
+      <hr />
     </nav>
 
-    <h2><%- paintingTitle %></h2> 
-    <div class="display">
-        <%- paintingImage %>
-    </div>
+    <h2><%- paintingTitle %></h2>
+    <div class="display"><%- paintingImage %></div>
 
-    <hr>
+    <hr />
 
     <h3>Painting Description</h3>
-    <div class="information">
-        <%- paintingInformation %>
-    </div>
-
-</body>
-
+    <div class="information"><%- paintingInformation %></div>
+  </body>
 </html>

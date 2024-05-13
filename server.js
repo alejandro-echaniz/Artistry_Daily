@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const http = require("http");
 const httpSuccessStatus = 200;
 
-const PORTNUMBER = process.env.PORT || 3001;
+const PORTNUMBER = process.env.PORT || 5006;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 
@@ -60,7 +60,6 @@ getRandomID((err, randomId) => {
         return;
     }
     generatedID = randomId;
-    console.log(generatedID);
 });
 
 async function getImageJson() {
@@ -107,6 +106,9 @@ app.get("/", async (req, res) => {
     res.render("index", data);
 });
 
+app.post("/", async (req, res) => {
+    
+})
 
 // async function main() {
 //     try {

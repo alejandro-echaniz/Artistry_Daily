@@ -1,46 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <!-- index.ejs -->
+  <!-- Akash Choudhury | Alejandro Echaniz -->
 
-<!-- index.ejs -->
-<!-- Akash Choudhury | Alejandro Echaniz -->
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="keywords" content="HTML5, Responsive">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML5, Responsive" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Artistry Daily</title>
-    <meta name="description" content="Main page for Artistry Daily">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
+    <meta name="description" content="Main page for Artistry Daily" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  </head>
 
-<body>
+  <body>
     <nav class="navigation">
-        <ul>
-            <li id="title"><h1>Artistry Daily</h1></li>
-            
-            <form action="/home" method="post" id="login">
-                <li><input type="email" id="email" placeholder="email address"></li>
-                <li><input type="password" id="password" placeholder="password"></li>
-                <li><button type="submit" id="submit">Enter</button></li>
-            </form>
-        </ul>
-        <hr>
+      <ul>
+        <li id="title">
+          <h1>Artistry Daily</h1>
+        </li>
+
+        <form action="/home" method="post" id="login">
+          <li><input type="email" id="email" placeholder="email address" /></li>
+          <li>
+            <input type="password" id="password" placeholder="password" />
+          </li>
+          <li><button type="submit" id="submit">Enter</button></li>
+        </form>
+      </ul>
+      <hr />
     </nav>
 
-    <h2><%- paintingTitle %></h2> 
+    <h2><%- paintingTitle %></h2>
 
-    <div class="display">
-        <%- paintingImage %>
-    </div>
+    <div class="display"><%- paintingImage %></div>
 
-    <hr>
+    <hr />
 
     <h3>Painting Description</h3>
-    <div class="information">
-        <%- paintingInformation %>
-    </div>
-
-</body>
-
+    <div class="information"><%- paintingInformation %></div>
+  </body>
 </html>
