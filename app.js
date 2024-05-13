@@ -17,9 +17,12 @@ const PORTNUMBER = process.env.PORT || 5005;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 
+/* -------------------------------------------------------------------------- */
+
 /* || MONGODB CONNECTION */
 // TODO
 
+/* -------------------------------------------------------------------------- */
 
 /* || AUXULIARY FUNCTIONS */
 let ids = [];
@@ -57,7 +60,6 @@ function getRandomID(callback) {
         callback(null, randomId);
     }
 }
-
 
 getRandomID((err, randomId) => {
     if (err) {
@@ -114,6 +116,7 @@ async function loadPaintingData() {
     };
 }
 
+/* -------------------------------------------------------------------------- */
 
 /* || EXPRESS CODE */
 app.get("/", async (req, res) => {
@@ -132,7 +135,9 @@ app.post("/home", async (req, res) => {
     res.render("home", paintingData)
 })
 
-/* running server locally */
+/* -------------------------------------------------------------------------- */
+
+/* || RUNNING SERVER */
 process.stdin.setEncoding("utf8");
 const greeting = `Web server started and running at ${PORTNUMBER}\n`;
 const prompt = `Stop to shutdown the server: `;
@@ -163,5 +168,5 @@ process.stdin.on('readable', () => {
 app.listen(PORTNUMBER);
 
 // app.listen(PORTNUMBER, () => {
-//     console.log(`Example app list∫∫ening on port ${PORTNUMBER}`)
+//     console.log(`Example app listening on port ${PORTNUMBER}`)
 // })
