@@ -16,13 +16,11 @@ const http = require("http");
 const PORTNUMBER = process.env.PORT || 5005;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
-
-/* -------------------------------------------------------------------------- */
+let lastFetchedDate = null; // date tracking purposes
 
 /* || MONGODB CONNECTION */
 // TODO
 
-/* -------------------------------------------------------------------------- */
 
 /* || AUXULIARY FUNCTIONS */
 let ids = [];
@@ -60,6 +58,7 @@ function getRandomID(callback) {
         callback(null, randomId);
     }
 }
+
 
 getRandomID((err, randomId) => {
     if (err) {
@@ -100,23 +99,40 @@ async function getImageUrl() {
     return url;
 }
 
+// TODO: review date functionality to ensure that it works as intended
 async function loadPaintingData() {
+    // Check if lastFetchedDate is not set or if it's a new day
+    const currentDate = new Date();
+    const isNewDay = !lastFetchedDate || lastFetchedDate.getDate() !== currentDate.getDate();
+
+    if (!isNewDay) {
+        // If it's not a new day, return the existing paintingData
+        return paintingData;
+    }
+
     //need to load the image url
     const url = await getImageUrl();
     const image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
     description = description === null ? `There is currently no description for this work :(` : description;
     
+    // formatting date
+    const options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+    
+    
     const info = `<p>This work is from ${artist} and is titled ` +
         `"<em>${title}</em>".</p><p>${description}</p>`
 
+    lastFetchedDate = currentDate;
+
     paintingData = {
         paintingTitle : title,
+        date: formattedDate,
         paintingImage : image,
         paintingInformation : info,
     };
 }
 
-/* -------------------------------------------------------------------------- */
 
 /* || EXPRESS CODE */
 app.get("/", async (req, res) => {
@@ -135,9 +151,7 @@ app.post("/home", async (req, res) => {
     res.render("home", paintingData)
 })
 
-/* -------------------------------------------------------------------------- */
-
-/* || RUNNING SERVER */
+/* running server locally */
 process.stdin.setEncoding("utf8");
 const greeting = `Web server started and running at ${PORTNUMBER}\n`;
 const prompt = `Stop to shutdown the server: `;
@@ -168,5 +182,5 @@ process.stdin.on('readable', () => {
 app.listen(PORTNUMBER);
 
 // app.listen(PORTNUMBER, () => {
-//     console.log(`Example app listening on port ${PORTNUMBER}`)
+//     console.log(`Example app list∫∫ening on port ${PORTNUMBER}`)
 // })
