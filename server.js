@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const http = require("http");
 const httpSuccessStatus = 200;
 
+const PORTNUMBER = process.env.PORT || 3001;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 
@@ -118,6 +119,6 @@ app.get("/", async (req, res) => {
   
 // main();
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+app.listen(PORTNUMBER, () => {
+    console.log(`Example app listening on port ${PORTNUMBER}`)
 })
