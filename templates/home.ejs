@@ -21,22 +21,36 @@
             
             <form action="/processRatings" method="post" id="login">
                 <li>
-                    <input type="range" min="0" max="5" value="3" class="slider" id="myRange">
+                    <input type="range" min="0" max="5" value="3" class="slider" id="myRange" list="tickmarks">
+                        <datalist id="tickmarks">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </datalist>
                 </li>
                 <li><button onclick="favorite()">Favorite</button></li>
                 <button type="submit">Submit</button>
+
+                <!-- TODO ENSURE THAT LOGOUT REDIRECTS BACK TO INDEX.EJS-->
+                <button onclick="logout()">Logout</button> 
             </form>
         </ul>
         <hr>
     </nav>
 
-    <h2><%- %></h2> <!-- TITLE OF PAINTING -->
+    <h2><%- paintingTitle %></h2> 
     <div class="display">
-        <img src="https://www.artic.edu/iiif/2/1adf2696-8489-499b-cad2-821d7fde4b33/full/843,/0/default.jpg">
+        <%- paintingImage %>
     </div>
+
+    <hr>
 
     <h3>Painting Description</h3>
     <div class="information">
+        <%- paintingInformation %>
     </div>
 
 </body>

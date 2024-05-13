@@ -2,29 +2,30 @@
 
 /* || custom VARIABLES */
 :root {
-    --primary-color : #BB0000;
-    --secondary-color : #666666;
-    --third-color : #E8DAB2;
-    --accent-color : #453831;
-    --text-color : #000000;
+    --primary-color : #D2E9E1;
+    --secondary-color : #A3BCBF;
+    --third-color : #F2EFDC;
+    --fourth-color : #B74F35;
+    --accent-color : #A63E26;
+    --text-color:  #36454f;
 }
 
 /* --------------------------------------- */
 
 /* || html defined tags */
+html {
+    background-color: var(--third-color);
+    color: var(--text-color);
+    /* margin: 0; Remove default margin */
+    /* padding: 0; Remove default padding */
+}
+
 body {
     font-family: Montserrat;
     font-optical-sizing: auto;
     font-style: normal;
-    background-color: #F3F3EB;
-}
-
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
 }
 
 /* --------------------------------------- */
@@ -32,21 +33,39 @@ ul {
 /* || custom CLASSES */
 .navigation {
     width: 100%;
-    background-color: #CFD8D7;
+    background-color: var(--secondary-color);
+}
+
+.navigation ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navigation #title {
+    font-style: italic;
+    float: left; 
+    margin-left: 25px;
+}
+
+.navigation #login {
+    margin-top: 25px;
+    float: right; /* Adjust alignment for the login form */
+}
+
+.navigation hr {
+    clear: both; /* Ensure the horizontal rule extends across the entire width */
+    margin: 0; /* Remove default margin */
+    border: 0; /* Remove default border */
+    border-top: 1px solid #000; /* Style the horizontal rule */
 }
 
 /* --------------------------------------- */
 
 /* || custom IDs */
-#title {
-    font-style: italic;
-}
-
-#login {
-    display: inline-block; 
-    float: right;
-}
-
 #login li {
     display: inline-block;
+    margin-right: 5px; /* Add some spacing between form elements */
 }
