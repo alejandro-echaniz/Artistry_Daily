@@ -12,13 +12,19 @@ app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 const http = require("http");
-const httpSuccessStatus = 200;
 
 const PORTNUMBER = process.env.PORT || 5005;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 
+/* || MONGODB CONNECTION */
+// TODO
+
+
+/* || AUXULIARY FUNCTIONS */
 let ids = [];
+let generatedID = NaN;
+let paintingData; // datablock containing painting information through api req
 
 // Function to get a random ID from the CSV file
 function getRandomID(callback) {
@@ -52,7 +58,6 @@ function getRandomID(callback) {
     }
 }
 
-let generatedID = NaN;
 
 getRandomID((err, randomId) => {
     if (err) {
@@ -93,9 +98,7 @@ async function getImageUrl() {
     return url;
 }
 
-let paintingData; // datablock containing painting information through api req
-
-app.get("/", async (req, res) => {
+async function loadPaintingData() {
     //need to load the image url
     const url = await getImageUrl();
     const image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
@@ -108,19 +111,22 @@ app.get("/", async (req, res) => {
         paintingTitle : title,
         paintingImage : image,
         paintingInformation : info,
+    };
+}
+
+
+/* || EXPRESS CODE */
+app.get("/", async (req, res) => {
+    if (!paintingData) {
+        await loadPaintingData();
     }
     res.render("index", paintingData);
 });
 
 app.post("/home", async (req, res) => {
-    // loading image url
-    // let image = `<img src="${url}" alt="Artwork from the Art Institute of Chicago">`;
-    // let info = `<p>This work is from ${artist} and is titled "<em>${title}</em>".</p><p>${description}</p>`
-    // let data = {
-        // paintingTitle : title,
-        // paintingImage : image,
-        // paintingInformation : info,
-    // }
+    if (!paintingData) {
+        await loadPaintingData();
+    }
 
     // rendering information onto page
     res.render("home", paintingData)
