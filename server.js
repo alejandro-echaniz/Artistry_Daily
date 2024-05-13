@@ -106,15 +106,18 @@ app.get("/", async (req, res) => {
     res.render("index", data);
 });
 
-async function main() {
-    try {
-        let bla = await getImageUrl();
-        console.log(bla);
-    } catch (e) { 
-      console.log("\n***** ERROR Retrieving *****\n" + e);
-    }
-  }
-  
-  main();
 
-app.listen(5004);
+// async function main() {
+//     try {
+//         let bla = await getImageUrl();
+//         console.log(bla);
+//     } catch (e) { 
+//       console.log("\n***** ERROR Retrieving *****\n" + e);
+//     }
+// }
+  
+// main();
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})

@@ -19,17 +19,17 @@
         <ul>
             <li id="title"><h1>Artistry Daily</h1></li>
             
-            <form action="/processLogin" method="post" id="login">
-                <li><input type="email" placeholder="email address"></li>
-                <li><input type="text" placeholder="password"></li>
-                <li><button type="submit">Enter</button></li>
+            <form action="/home" method="post" id="login">
+                <li><input type="email" id="email" placeholder="email address"></li>
+                <li><input type="password" id="password" placeholder="password"></li>
+                <li><button type="submit" id="submit">Enter</button></li>
             </form>
         </ul>
         <hr>
     </nav>
 
     <h2><%- paintingTitle %></h2> 
-    
+
     <div class="display">
         <%- paintingImage %>
     </div>
