@@ -25,7 +25,6 @@ body {
     padding: 0;
 }
 
-/* Optional: If you want to center text inside the h2 */
 h2 {
     text-align: center;
 }
@@ -53,34 +52,41 @@ h3, .information{
     display: flex;
     justify-content: space-between; /* Align items at the start and end of the container */
     align-items: center;
-  }
-  
-  #left-items,
-  #login {
-    display: flex;
+}
+
+#leftItems {
+    margin-left: 25px;
+}
+
+#leftItems {
+    font-style: italic;
+    font-weight: bold;
+}
+
+#leftItems, #login {
+    /* display: flex; */
     align-items: center;
-  }
-  
-  #login {
+}
+
+#login {
     margin-left: auto; /* Push the login form to the right */
-  }
-  
-  #login form {
+}
+
+#login form {
     display: flex; /* Make the form flex container */
-  }
-  
-  #login form li {
+}
+
+#login form li {
     margin-left: 10px; /* Add spacing between form elements */
-  }
-  
-  .navigation h1 {
+}
+
+.navigation h1 {
     margin: 0; /* Remove default margin for h1 */
-  }
-  
-  .navigation hr {
+}
+
+.navigation hr {
     margin-top: 10px;
-  }
-  
+}
 
 .navigation form {
     display: flex; /* Make the form flex container */
@@ -108,17 +114,14 @@ h3, .information{
 .navigation #ratingRange {
     float: right;
     margin-top: 25px;
-    margin-right: 5px;
+    margin-right: 5px; 
 }
 
-.navigation #submit {
+#rightItems #submit {
     height: 20px;
+    margin-left: 5px;
     margin-top: 25px;
-    margin-left: 5px;
-}
-.rightItems #submit {
-    height: 20px;
-    margin-left: 5px;
+    margin-right: 25px;
 }
 
 
