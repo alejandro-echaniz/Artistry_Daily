@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
+const NodeCache = require('node-cache');
+const cache = new NodeCache();
 
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.set("views", path.resolve(__dirname, "templates"));
@@ -72,15 +74,23 @@ async function findUser(client, databaseAndCollection, userEmail) {
     }
 }
 
+async function updateRatings(client, databaseAndCollection, targetName, newRating){
+    let filter = {email : targetName};
+    let update = { $push : {ratings : newRating}};
+
+    const result = await client
+        .db(databaseAndCollection.db)
+        .collection(databaseAndCollection.collection)
+        .updateOne(filter, update);
+        
+    console.log(`Documents modified: ${result.modifiedCount}`);
+}
+
+
 /* || AUXULIARY FUNCTIONS */
 let ids = [];
 let generatedID = NaN;
 let paintingData; // datablock containing painting information through api req
-
-function handleCheckboxChange() {
-    let checkbox = document.getElementById("isFavorite");
-    checkbox.value = checkbox.checked;
-}
 
 // Function to get a random ID from the CSV file
 function getRandomID(callback) {
@@ -113,7 +123,6 @@ function getRandomID(callback) {
         callback(null, randomId);
     }
 }
-
 
 getRandomID((err, randomId) => {
     if (err) {
@@ -189,7 +198,9 @@ async function loadPaintingData() {
 }
 
 
+
 /* || EXPRESS CODE */
+app.use(express.urlencoded({ extended: true }));
 app.get("/", async (req, res) => {
     if (!paintingData) {
         await loadPaintingData();
@@ -199,28 +210,37 @@ app.get("/", async (req, res) => {
 
 app.post("/", async (req, res) => {
     const ratingData = req.body.ratingRange;
-    const favorited = req.body.isFavorite === true;
+    const favorited = req.body.isFavorite === "on";
+    const targetEmail = cache.get("emailData");
 
-    console.log(favorited);
-    console.log(ratingData);
+    //TODO: building object
+    let rating = {
+        "Artwork" : paintingData.paintingTitle, 
+        "Artist" : artist,
+        "Rating" : ratingData,
+        "isFavorite" : favorited
+    };
+
+    updateRatings(client, databaseAndCollection, targetEmail, rating);
 
     res.redirect("/")
 })
 
 app.post("/home", async (req, res) => {
     const emailData = req.body.email;
+    cache.set("emailData", emailData, 600);
     const passwordData = req.body.password;
 
     const result = await findUser(client, databaseAndCollection, emailData);
     if (result === false) {
-        let userData = {email : emailData, password : passwordData};
+        let userData = {email : emailData, password : passwordData, ratings : []};
         insertUser(client, databaseAndCollection, userData);
     }
 
     await loadPaintingData();
     res.render("home", paintingData);
-
 })
+
 
 /* running server locally */
 process.stdin.setEncoding("utf8");
