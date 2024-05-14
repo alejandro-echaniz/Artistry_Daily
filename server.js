@@ -32,6 +32,7 @@ const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 async function connectToMongoDB() {
     try {
         await client.connect();
+        console.log("\nSuccessfully connected to mongodb");
     } catch (error) {
         console.error(`(ERROR) connecting to MongoDB server: ${error}`);
     } 
@@ -45,15 +46,15 @@ async function insertUser(client, databaseAndCollection, newUser) {
             .collection(databaseAndCollection.collection)
             .insertOne(newUser);
 
-        // console.log(`User entry created with id ${result.insertedId}`);
+        console.log(`User entry created with id ${result.insertedId}`);
     } catch (error) {
         console.error(`(ERROR) inserting new user data into MongoDB: ${error}`)
     }
 }
 
 // FIND USER
-async function findUser(client, databaseAndCollection, userEmail, userPassword) {
-    let filter = {email : userEmail, password : userPassword};
+async function findUser(client, databaseAndCollection, userEmail) {
+    let filter = {email : userEmail};
 
     try {
         const result = await client.db(databaseAndCollection.db)
@@ -195,17 +196,13 @@ app.post("/home", async (req, res) => {
     const emailData = req.body.email;
     const passwordData = req.body.password;
 
-    let userData = {email : emailData, password : passwordData}
-
-    if (findUser === false){
-        await insertUser(client, databaseAndCollection, userData);
+    const result = await findUser(client, databaseAndCollection, emailData);
+    if (result === false) {
+        let userData = {email : emailData, password : passwordData};
+        insertUser(client, databaseAndCollection, userData);
     }
 
-    if (!paintingData) {
-        await loadPaintingData();
-    }
-
-    // rendering information onto page
+    await loadPaintingData();
     res.render("home", paintingData)
 })
 
