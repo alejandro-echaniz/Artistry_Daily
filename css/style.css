@@ -5,8 +5,7 @@
     --primary-color : #D2E9E1;
     --secondary-color : #A3BCBF;
     --third-color : #F2EFDC;
-    --fourth-color : #B74F35;
-    --accent-color : #A63E26;
+    --accent-color : #B74F35;
     --text-color:  #36454f;
 }
 
@@ -16,50 +15,154 @@
 html {
     background-color: var(--third-color);
     color: var(--text-color);
-    /* margin: 0; Remove default margin */
-    /* padding: 0; Remove default padding */
 }
 
 body {
     font-family: Montserrat;
     font-optical-sizing: auto;
     font-style: normal;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    margin: 0; 
+    padding: 0;
 }
 
+/* Optional: If you want to center text inside the h2 */
+h2 {
+    text-align: center;
+}
+
+h3, .information{
+    margin-left: 20px;
+}
 /* --------------------------------------- */
 
 /* || custom CLASSES */
+.display {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+}
+
 .navigation {
     width: 100%;
     background-color: var(--secondary-color);
 }
 
 .navigation ul {
-    width: 100%;
     list-style-type: none;
-    margin: 0;
     padding: 0;
-    overflow: hidden;
+    margin: 0;
+    display: flex;
+    justify-content: space-between; /* Align items at the start and end of the container */
+    align-items: center;
+  }
+  
+  #left-items,
+  #login {
+    display: flex;
+    align-items: center;
+  }
+  
+  #login {
+    margin-left: auto; /* Push the login form to the right */
+  }
+  
+  #login form {
+    display: flex; /* Make the form flex container */
+  }
+  
+  #login form li {
+    margin-left: 10px; /* Add spacing between form elements */
+  }
+  
+  .navigation h1 {
+    margin: 0; /* Remove default margin for h1 */
+  }
+  
+  .navigation hr {
+    margin-top: 10px;
+  }
+  
+
+.navigation form {
+    display: flex; /* Make the form flex container */
+}
+  
+.navigation hr {
+    margin-top: 10px; /* Add some space below the navigation bar */
 }
 
-.navigation #title {
-    font-style: italic;
-    float: left; 
-    margin-left: 25px;
-}
 
 .navigation #login {
+    float: right; 
     margin-top: 25px;
-    float: right; /* Adjust alignment for the login form */
+    margin-right: 25px;
 }
 
+.navigation #isFavorite {
+    margin-top: 30px;
+}
+
+.navigation label {
+    margin-top: 26px;
+}
+
+.navigation #ratingRange {
+    float: right;
+    margin-top: 25px;
+    margin-right: 5px;
+}
+
+.navigation #submit {
+    height: 20px;
+    margin-top: 25px;
+    margin-left: 5px;
+}
+.rightItems #submit {
+    height: 20px;
+    margin-left: 5px;
+}
+
+
+.navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between; /* Align items at the start and end of the container */
+    align-items: center;
+  }
+  
+  #left-items,
+  #right-items {
+    display: flex;
+    align-items: center;
+  }
+  
+  #right-items {
+    margin-left: auto; /* Push items to the right */
+  }
+  
+  #right-items form {
+    display: flex; /* Make the form flex container */
+  }
+  
+  #right-items form li {
+    margin-left: 10px; /* Add spacing between form elements */
+  }
+  
+  .navigation h1 {
+    margin: 0; /* Remove default margin for h1 */
+  }
+  
+  .navigation hr {
+    margin-top: 10px;
+  }
+  
+
 .navigation hr {
-    clear: both; /* Ensure the horizontal rule extends across the entire width */
-    margin: 0; /* Remove default margin */
-    border: 0; /* Remove default border */
-    border-top: 1px solid #000; /* Style the horizontal rule */
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* --------------------------------------- */
@@ -68,4 +171,32 @@ body {
 #login li {
     display: inline-block;
     margin-right: 5px; /* Add some spacing between form elements */
+}
+
+#email, #password, #submit {
+    font-family: Montserrat;
+    transition-duration: 0.4s;
+}
+
+#email:focus {
+    outline: none;
+    border: 2px solid var(--primary-color);
+}
+
+#password:focus {
+    outline: none;
+    border: 2px solid var(--primary-color);
+}
+
+#submit {
+    color: var(--text-color);
+    background-color: white;
+    border: 1px solid white;
+}
+
+#submit:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+
 }

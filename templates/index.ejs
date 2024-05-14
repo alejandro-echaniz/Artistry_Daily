@@ -16,10 +16,11 @@
   <body>
     <nav class="navigation">
       <ul>
-        <li id="title">
+        <li id="left Items">
           <h1>Artistry Daily</h1>
+          <%- date %>
         </li>
-        <li id="date"><%- date %></li>
+        
         <form action="/home" method="post" id="login">
           <li><input type="email" id="email" name="email" placeholder="email address" /></li>
           <li>
@@ -35,9 +36,8 @@
 
     <div class="display"><%- paintingImage %></div>
 
-    <hr />
-
     <h3>Painting Description</h3>
     <div class="information"><%- paintingInformation %></div>
+    
   </body>
 </html>

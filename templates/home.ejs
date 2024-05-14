@@ -16,9 +16,12 @@
   <body>
     <nav class="navigation">
       <ul>
-        <li id="title"><h1>Artistry Daily</h1></li>
+        <li id="left Items">
+          <h1>Artistry Daily</h1>
+          <%- date %>
+        </li>
 
-        <form action="/" method="post" id="rating">
+        <form action="/" method="post" id="rightItems">
           <li>
             <input
               type="range"
@@ -41,18 +44,18 @@
           </li>
           <li><input type="checkbox" id="isFavorite" name="isFavorite" onclick="handleCheckboxChange()"></li>
           <label for="isFavorite">Favorite!</label>
-          <button type="submit">Submit</button>
+          <button type="submit" id="submit">Submit</button>
         </form>
       </ul>
       <hr />
     </nav>
 
     <h2><%- paintingTitle %></h2>
+    
     <div class="display"><%- paintingImage %></div>
-
-    <hr />
 
     <h3>Painting Description</h3>
     <div class="information"><%- paintingInformation %></div>
+
   </body>
 </html>
