@@ -77,6 +77,10 @@ let ids = [];
 let generatedID = NaN;
 let paintingData; // datablock containing painting information through api req
 
+function submitRating() {
+    
+}
+
 // Function to get a random ID from the CSV file
 function getRandomID(callback) {
     // Check if IDs are already loaded

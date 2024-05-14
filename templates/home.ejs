@@ -38,8 +38,9 @@
               <option value="5">5</option>
             </datalist>
           </li>
-          <li><button onclick="favorite()">Favorite</button></li>
-          <button type="submit">Submit</button>
+          <li><input type="checkbox" id="isFavorite" name="isFavorite" value="Favorite"></li>
+          <label for="isFavorite">Favorite!</label>
+          <button type="submit" onclick="submitRating()">Submit</button>
 
           <!-- TODO ENSURE THAT LOGOUT REDIRECTS BACK TO INDEX.EJS-->
           <button onclick="logout()">Logout</button>
