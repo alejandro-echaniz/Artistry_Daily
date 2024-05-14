@@ -77,8 +77,9 @@ let ids = [];
 let generatedID = NaN;
 let paintingData; // datablock containing painting information through api req
 
-function submitRating() {
-    
+function handleCheckboxChange() {
+    let checkbox = document.getElementById("isFavorite");
+    checkbox.value = checkbox.checked;
 }
 
 // Function to get a random ID from the CSV file
@@ -196,6 +197,16 @@ app.get("/", async (req, res) => {
     res.render("index", paintingData);
 });
 
+app.post("/", async (req, res) => {
+    const ratingData = req.body.ratingRange;
+    const favorited = req.body.isFavorite === true;
+
+    console.log(favorited);
+    console.log(ratingData);
+
+    res.redirect("/")
+})
+
 app.post("/home", async (req, res) => {
     const emailData = req.body.email;
     const passwordData = req.body.password;
@@ -207,7 +218,8 @@ app.post("/home", async (req, res) => {
     }
 
     await loadPaintingData();
-    res.render("home", paintingData)
+    res.render("home", paintingData);
+
 })
 
 /* running server locally */

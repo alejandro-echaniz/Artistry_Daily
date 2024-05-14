@@ -18,7 +18,7 @@
       <ul>
         <li id="title"><h1>Artistry Daily</h1></li>
 
-        <form action="/processRatings" method="post" id="login">
+        <form action="/" method="post" id="rating">
           <li>
             <input
               type="range"
@@ -26,7 +26,8 @@
               max="5"
               value="3"
               class="slider"
-              id="myRange"
+              id="ratingRange"
+              name = "ratingRange",
               list="tickmarks"
             />
             <datalist id="tickmarks">
@@ -38,12 +39,9 @@
               <option value="5">5</option>
             </datalist>
           </li>
-          <li><input type="checkbox" id="isFavorite" name="isFavorite" value="Favorite"></li>
+          <li><input type="checkbox" id="isFavorite" value="false" name="isFavorite" onclick="handleCheckboxChange()"></li>
           <label for="isFavorite">Favorite!</label>
-          <button type="submit" onclick="submitRating()">Submit</button>
-
-          <!-- TODO ENSURE THAT LOGOUT REDIRECTS BACK TO INDEX.EJS-->
-          <button onclick="logout()">Logout</button>
+          <button type="submit">Submit</button>
         </form>
       </ul>
       <hr />
