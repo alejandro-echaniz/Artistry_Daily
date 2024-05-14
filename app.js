@@ -19,8 +19,57 @@ let image_id, endpoint, description, title, artist;
 let lastFetchedDate = null; // date tracking purposes
 
 /* || MONGODB CONNECTION */
-// TODO
+require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
+const db = process.env.MONGO_DB_NAME;
+const collection = process.env.MONGO_DB_COLLECTION;
+const username = process.env.MONGO_DB_USERNAME;
+const password = process.env.MONGO_DB_PASSWORD;
 
+const databaseAndCollection = {db: db, collection:collection};
+const uri = `mongodb+srv://${username}:${password}@cluster0.aurpqef.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
+
+async function connectToMongoDB() {
+    try {
+        await client.connect();
+    } catch (error) {
+        console.error(`(ERROR) connecting to MongoDB server: ${error}`);
+    } 
+}
+connectToMongoDB();
+
+// INSERT USER
+async function insertUser(client, databaseAndCollection, newUser) {
+    try {
+        const result = await client.db(databaseAndCollection.db)
+            .collection(databaseAndCollection.collection)
+            .insertOne(newUser);
+
+        // console.log(`User entry created with id ${result.insertedId}`);
+    } catch (error) {
+        console.error(`(ERROR) inserting new user data into MongoDB: ${error}`)
+    }
+}
+
+// FIND USER
+async function findUser(client, databaseAndCollection, userEmail, userPassword) {
+    let filter = {email : userEmail, password : userPassword};
+
+    try {
+        const result = await client.db(databaseAndCollection.db)
+            .collection(databaseAndCollection.collection)
+            .findOne(filter);
+        
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error(`(ERROR) Finding user email in MongoDB: ${error}`)
+        return null;
+    }
+}
 
 /* || AUXULIARY FUNCTIONS */
 let ids = [];
@@ -143,6 +192,15 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/home", async (req, res) => {
+    const emailData = req.body.email;
+    const passwordData = req.body.password;
+
+    let userData = {email : emailData, password : passwordData}
+
+    if (findUser === false){
+        await insertUser(client, databaseAndCollection, userData);
+    }
+
     if (!paintingData) {
         await loadPaintingData();
     }
