@@ -10,15 +10,15 @@ const cache = new NodeCache();
 
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.set("views", path.resolve(__dirname, "templates"));
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
-const http = require("http");
 
 const PORTNUMBER = process.env.PORT || 5005;
 const URL_SUFFIX = '/full/843,/0/default.jpg';
 let image_id, endpoint, description, title, artist;
 let lastFetchedDate = null; // date tracking purposes
+
+// ===========================================================================
 
 /* || MONGODB CONNECTION */
 require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
@@ -34,7 +34,7 @@ const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 async function connectToMongoDB() {
     try {
         await client.connect();
-        console.log("\nSuccessfully connected to mongodb");
+        console.log("Successfully connected to Mongo DB!");
     } catch (error) {
         console.error(`(ERROR) connecting to MongoDB server: ${error}`);
     } 
@@ -86,6 +86,7 @@ async function updateRatings(client, databaseAndCollection, targetName, newRatin
     console.log(`Documents modified: ${result.modifiedCount}`);
 }
 
+// ===========================================================================
 
 /* || AUXULIARY FUNCTIONS */
 let ids = [];
@@ -163,7 +164,6 @@ async function getImageUrl() {
     return url;
 }
 
-// TODO: review date functionality to ensure that it works as intended
 async function loadPaintingData() {
     // Check if lastFetchedDate is not set or if it's a new day
     const currentDate = new Date();
@@ -197,7 +197,7 @@ async function loadPaintingData() {
     };
 }
 
-
+// ===========================================================================
 
 /* || EXPRESS CODE */
 app.use(express.urlencoded({ extended: true }));
@@ -213,7 +213,6 @@ app.post("/", async (req, res) => {
     const favorited = req.body.isFavorite === "on";
     const targetEmail = cache.get("emailData");
 
-    //TODO: building object
     let rating = {
         "Artwork" : paintingData.paintingTitle, 
         "Artist" : artist,
@@ -241,37 +240,7 @@ app.post("/home", async (req, res) => {
     res.render("home", paintingData);
 })
 
-
-/* running server locally */
-process.stdin.setEncoding("utf8");
-const greeting = `Web server started and running at ${PORTNUMBER}\n`;
-const prompt = `Stop to shutdown the server: `;
-
-process.stdout.write(greeting);
-process.stdout.write(prompt);
-
-process.stdin.on('readable', () => {
-    const dataInput = process.stdin.read();
-    if (dataInput !== null) {
-        const command = dataInput.trim();
-
-        // SHUTDOWN SERVER
-        if (command === "stop") {
-            console.log("Shutting down the server");
-            process.exit(0);
-        } 
-        
-        // WILD CARD: IMPROPER COMMAND
-        else {
-            console.log(`Invalid command: ${command}`);
-            process.stdout.write(prompt);
-        }
-    }
-    process.stdin.resume();
+/* || RUNNING SERVER */
+app.listen(PORTNUMBER, () => {
+    console.log(`Server running on PORT: ${PORTNUMBER}`)
 })
-
-app.listen(PORTNUMBER);
-
-// app.listen(PORTNUMBER, () => {
-//     console.log(`Example app list∫∫ening on port ${PORTNUMBER}`)
-// })
